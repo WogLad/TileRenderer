@@ -27,8 +27,13 @@ class LivingBeing {
         }
         // (DONE): Set the name of the livingBeing using chance.first({gender: "Use the gender based on the one decided above"})
         this.name = chance.first({gender: this.gender});
+        // (TODO): Make a clock in the World.js script that makes time pass in the simulation and make it increase the age of all living beings at a certain rate
         this.age = 0;
+
         this.heteroSpeciesLikeability = Math.random(); // The factor randomly decided to check if this living being would be attracted to other species
+        if ((father != null && mother != null) && this.heteroSpeciesLikeability < 0.5 && father.constructor.name != mother.constructor.name) {
+            this.heteroSpeciesLikeability *= 2;
+        }
 
         this.father = father;
         this.mother = mother;
@@ -77,7 +82,8 @@ class LivingBeing {
 
         this.friends = [];
 
-        this.performWork = () => {};
+        this.performWork = () => {}; // (TODO)
+        this.haveChild = () => {}; // (TODO): Requires the livingBeing to have a spouse and if the parents are of different species, the child will be one of the two species
     }
 
     // Calculates the likeability of all the friends of the living being based on their personality stat and on the concept of opposites attract
@@ -87,7 +93,7 @@ class LivingBeing {
         // Checks if both livingBeings have a high personality
         if (this.personality >= 50 && livingBeing.personality >= 50 && deviation <= 20) {
             // Checks if the two livingBeing(s) are of different species and if they both have a close enough liking towards other speices
-            if (this.constructor.name != livingBeing.constructor.name && Math.abs(this.heteroSpeciesLikeability - livingBeing.heteroSpeciesLikeability) > 0.2) {
+            if (this.constructor.name != livingBeing.constructor.name && (this.heteroSpeciesLikeability >= 0.5 && livingBeing.heteroSpeciesLikeability >= 0.5)) {
                 return false; // The livingBeing is not likeable
             }
             else {
