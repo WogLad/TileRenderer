@@ -18,9 +18,14 @@ function calculateProfession(livingBeing) {
 
 class LivingBeing {
     constructor(father = null, mother = null) {
-        // (WIP): Either "male" or "female" based on the 1/3 people are female and the other 2/3 are male
-        this.gender;
-        // (TODO): Set the name of the livingBeing using chance.first({gender: "Use the gender based on the one decided above"})
+        // (DONE): Either "male" or "female" based on the 1/3 people are female and the other 2/3 are male
+        if (Math.random() <= 1/3) {
+            this.gender = "female";
+        }
+        else {
+            this.gender = "male";
+        }
+        // (DONE): Set the name of the livingBeing using chance.first({gender: "Use the gender based on the one decided above"})
         this.name = chance.first({gender: this.gender});
         this.age = 0;
         this.heteroSpeciesLikeability = Math.random(); // The factor randomly decided to check if this living being would be attracted to other species
