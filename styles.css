@@ -1,0 +1,11 @@
+body {
+    font-family: monospace;
+    color: #dfdfdf;
+    background-color: #121212;
+}
+
+canvas {
+    padding: 0;
+    margin: auto;
+    display: block;
+}
