@@ -37,12 +37,16 @@ const startWorkTime = 9000; // 9:00 AM is the startWorkTime
 const leaveWorkTime = 17000; // 5:00 PM is the leaveWorkTime
 var tickLoop = setInterval(() => {
     // Increase the timer for the clock, which is then used by all the other functions to know the time passed
-    if (ticks == 24000) {ticks = 0;}
+    if (ticks == 24000) {ticks = 0; console.log("A new day has begun.")}
 
     var allLivingBeings = getAllLivingBeings();
     for (var i = 0; i < allLivingBeings.length; i++) {
-        allLivingBeings[i].performWork();
+        allLivingBeings[i].performWork(ticks);
     }
 
     ticks += 1;
+
+    if (ticks == startWorkTime || ticks == leaveWorkTime || ticks == (leaveWorkTime+1000)) {
+        console.log(ticks);
+    }
 }, 25 /* An interval of 25ms == 40 ticks per second */);
