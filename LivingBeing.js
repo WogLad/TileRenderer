@@ -129,39 +129,39 @@ class LivingBeing {
 
     }
 
-    performWork(t /*"t" is the ticks of the world clock*/) { // (TODO)
-        switch (this.profession) {
-            case PROFESSION.Warrior:
-                break;
-            
-            case PROFESSION.Hunter:
-                break;
-        
-            case PROFESSION.Wizard:
-                break;
-        
-            case PROFESSION.Doctor:
-                break;
-        
-            case PROFESSION.Miner:
-                // The livingBeing doesn't do anything as the current time is before or after the working hours
-                if (t < startWorkTime) {
+    performWork(t /*"t" is the ticks of the world clock*/) { // (WIP)
+        // The livingBeing doesn't do anything as the current time is before or after the working hours
+        if (t < startWorkTime) {
+            return;
+        }
+        // (DONE): Make the livingBeing go to the "Pub" after working for 1 hour (at tick 18000, leave the "Pub" and send them home)
+        else if (t == leaveWorkTime) {
+            this.location = LOCATION.Pub;
+        }
+        else if (t == (leaveWorkTime+1000) /*1000 means that the livingBeing will stay in the "Pub" for 1 hour*/ ) {
+            this.location = LOCATION.Home;
+        }
+        // (DONE): Goes to the mountains
+        else if (t < leaveWorkTime) {
+            switch (this.profession) {
+                case PROFESSION.Warrior:
                     break;
-                }
-                // (DONE): Make the livingBeing go to the "Pub" after working for 1 hour (at tick 18000, leave the "Pub" and send them home)
-                else if (t == leaveWorkTime) {
-                    this.location = LOCATION.Pub;
-                }
-                else if (t == (leaveWorkTime+1000) /*1000 means that the livingBeing will stay in the "Pub" for 1 hour*/ ) {
-                    this.location = LOCATION.Home;
-                }
-                // (DONE): Goes to the mountains
-                else if (t < leaveWorkTime) {
+                
+                case PROFESSION.Hunter:
+                    break;
+            
+                case PROFESSION.Wizard:
+                    break;
+            
+                case PROFESSION.Doctor:
+                    break;
+            
+                case PROFESSION.Miner:
                     this.location = LOCATION.Mountain;
 
                     /* (DONE): Decide on what ore to get and mine it (which means to just add it to the inventory
-                               of the livingBeing until they run out of inventory space and then they sell it instantly for
-                               money and repeat that process until the "leave work" time come) */
+                                of the livingBeing until they run out of inventory space and then they sell it instantly for
+                                money and repeat that process until the "leave work" time come) */
                     if (this.inventory.length < this.inventoryMax) {
                         if (ticks % 40 == 0 /* Mines at an interval of one second */) {
                             var ore = getRandomOre();
@@ -170,13 +170,19 @@ class LivingBeing {
                         }
                     }
                     else { // Sells off all the ores the livingBeing has and give them money
-                        // (TODO): Make this a forEach loop that checks what's in the inventory and increases the money based on that
-                        this.money += this.inventory.length * 10; // The price of one "iron" is $10
-                        this.inventory = [];
+                        // (DONE): Make this a forEach loop that checks what's in the inventory and increases the money based on that
+                        this.inventory.forEach(item => {
+                            switch(item) {
+                                case "iron":
+                                    this.money += 10; // The price of one "iron" is $10
+                                    this.inventory.pop(this.inventory.indexOf("iron"));
+                                    break;
+                            }
+                        });
+                        // this.inventory = [];
                     }
-                }
-
-                break;
+                    break;
+            }
         }
     }
 

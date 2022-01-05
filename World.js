@@ -35,9 +35,10 @@ console.log(getAllLivingBeings());
 var ticks = 0; // Also is the number for the time of each day in the simulation, measured in ticks of course
 const startWorkTime = 9000; // 9:00 AM is the startWorkTime
 const leaveWorkTime = 17000; // 5:00 PM is the leaveWorkTime
+console.log(new Date());
 var tickLoop = setInterval(() => {
     // Increase the timer for the clock, which is then used by all the other functions to know the time passed
-    if (ticks == 24000) {ticks = 0; console.log("A new day has begun.")}
+    if (ticks == 24000) {ticks = 0; console.log("A new day has begun."); console.log(new Date()); /*clearInterval(tickLoop);*/}
 
     var allLivingBeings = getAllLivingBeings();
     for (var i = 0; i < allLivingBeings.length; i++) {
@@ -45,8 +46,4 @@ var tickLoop = setInterval(() => {
     }
 
     ticks += 1;
-
-    if (ticks == startWorkTime || ticks == leaveWorkTime || ticks == (leaveWorkTime+1000)) {
-        console.log(ticks);
-    }
-}, 25 /* An interval of 25ms == 40 ticks per second */);
+}, 25 /* An interval of 25ms == 40 ticks per second, 1 simulation day == 10 minutes in real world time */);
