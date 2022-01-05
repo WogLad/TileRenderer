@@ -28,5 +28,21 @@ function populateWorld(startingAmount) {
     }
 }
 
-populateWorld(4);
+setTimeout(populateWorld(4), 1000);
 console.log(getAllLivingBeings());
+
+// World Tick Function for World Clock
+var ticks = 0; // Also is the number for the time of each day in the simulation, measured in ticks of course
+const startWorkTime = 9000; // 9:00 AM is the startWorkTime
+const leaveWorkTime = 17000; // 5:00 PM is the leaveWorkTime
+var tickLoop = setInterval(() => {
+    // Increase the timer for the clock, which is then used by all the other functions to know the time passed
+    if (ticks == 24000) {ticks = 0;}
+
+    var allLivingBeings = getAllLivingBeings();
+    for (var i = 0; i < allLivingBeings.length; i++) {
+        allLivingBeings[i].performWork();
+    }
+
+    ticks += 1;
+}, 25 /* An interval of 25ms == 40 ticks per second */);
