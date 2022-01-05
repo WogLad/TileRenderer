@@ -14,17 +14,9 @@
     <h1 style="text-align: center;"><u>CivSim</u></h1>
     <canvas id="main-canvas" width="500px" height="500px"></canvas>
 
-    <script> // World Tick Function for World Clock
-        var ticks = 0;
-        var tickLoop = setInterval(() => {
-            // Increase the timer for the clock, which is then used by all the other functions to know the time passed
-            if (ticks == 1000) {ticks = 0;}
-            ticks += 1;
-        }, 25 /* An interval of 25ms == 40 ticks per second */);
-    </script>
-
     <script src="Renderer.js"></script>
 
+    <script src="ProfessionFunctions.js"></script>
     <script src="LivingBeing.js"></script>
     <script src="LivingBeings/Human.js"></script>
     <script src="LivingBeings/Elf.js"></script>
