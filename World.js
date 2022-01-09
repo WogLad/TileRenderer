@@ -42,8 +42,10 @@ var tickLoop = setInterval(() => {
 
     var allLivingBeings = getAllLivingBeings();
     for (var i = 0; i < allLivingBeings.length; i++) {
-        allLivingBeings[i].performWork(ticks);
+        if (allLivingBeings[i].isAlive == true) {
+            allLivingBeings[i].performWork(ticks);
+        }
     }
 
     ticks += 1;
-}, 25 /* An interval of 25ms == 40 ticks per second, 1 simulation day == 10 minutes in real world time */);
+}, 12.5 /* An interval of 12.5ms == 80 ticks per second, 1 simulation day == 5 minutes in real world time */);

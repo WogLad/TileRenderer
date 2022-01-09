@@ -1,9 +1,10 @@
 var PROFESSION = {
-    "Warrior": 0, // Kills monsters around the town
-    "Hunter":  1, // Hunts animals to get resources from them like food and crafting ingredients
-    "Wizard":  2, // Uses magic to either kill monsters or to protect the town or for other miscellaneous activities
-    "Doctor":  3, // Uses magic to heal people
-    "Miner":   4, // Mines rocks, minerals, and ores in the mountains
+    "Warrior":    0, // Kills monsters around the town
+    "Hunter":     1, // Hunts animals to get resources from them like food and crafting ingredients
+    "Wizard":     2, // Uses magic to either kill monsters or to protect the town or for other miscellaneous activities
+    "Doctor":     3, // Uses magic to heal people
+    "Miner":      4, // Mines rocks, minerals, and ores in the mountains
+    "Lumberjack": 5, // Cuts trees in the forest and sells the wood and other resources from the trees for money
 }
 PROFESSION = Object.freeze(PROFESSION);
 
@@ -35,6 +36,8 @@ function calculateProfession(livingBeing) {
 
 class LivingBeing {
     constructor(father = null, mother = null) {
+        this.isAlive = true;
+
         // (DONE): Either "male" or "female" based on the 1/3 people are female and the other 2/3 are male
         if (Math.random() <= 1/3) {
             this.gender = "female";
@@ -141,10 +144,51 @@ class LivingBeing {
         else if (t == (leaveWorkTime+1000) /*1000 means that the livingBeing will stay in the "Pub" for 1 hour*/ ) {
             this.location = LOCATION.Home;
         }
-        // (DONE): Goes to the mountains
         else if (t < leaveWorkTime) {
             switch (this.profession) {
                 case PROFESSION.Warrior:
+                    // (DONE): Goes to the dungeon
+                    this.location = LOCATION.Dungeon;
+
+                    /* 
+                    (DONE): Decide on what monster to fight and run a combat algorithm to see who wins between the warrior and the monster.
+                    (DONE): If the monster is too strong, make the warrior run away from it but make there a chance for the warrior to still die.
+                    (DONE): If the warrior kills the monster, give monster loot to the warrior as a reward and make them sell all their monster
+                            loot when they run out of inventory space, and repeat that process until the "leave work" time comes.
+                    */
+                    if (this.inventory.length < this.inventoryMax) {
+                        if (ticks % 80 == 0 /* Kills monsters at an interval of two seconds */) {
+                            var enemy = getRandomEnemy();
+                            // this.inventory.push(ore);
+                            if (enemy.strength > this.strength && Math.random() < 0.33) {
+                                this.isAlive = false;
+                                console.log(`${this.name} was killed by an enemy(${enemy.name}).`);
+                            }
+                            else if (this.strength == enemy.strength && Math.random() < 0.5) {
+                                this.isAlive = false;
+                                console.log(`${this.name} was killed by an enemy(${enemy.name}).`);
+                            }
+                            else { // The livingBeing killed the enemy
+                                this.inventory.push(enemy.loot);
+                                console.log(`${this.name} killed an enemy(${enemy.name}).`);
+                            }
+                        }
+                    }
+                    else { // Sells off all the monster loot the livingBeing has and give them money
+                        // (DONE): Make this a forEach loop that checks what's in the inventory and increases the money based on that
+                        this.inventory.forEach(item => {
+                            switch(item) {
+                                case "flesh":
+                                    this.money += 5; // The price of one "flesh" is $5
+                                    this.inventory.pop(this.inventory.indexOf("flesh"));
+                                    break;
+                                case "bone":
+                                    this.money += 7; // The price of one "bone" is $7
+                                    this.inventory.pop(this.inventory.indexOf("bone"));
+                                    break;
+                            }
+                        });
+                    }
                     break;
                 
                 case PROFESSION.Hunter:
@@ -157,11 +201,12 @@ class LivingBeing {
                     break;
             
                 case PROFESSION.Miner:
+                    // (DONE): Goes to the mountain
                     this.location = LOCATION.Mountain;
 
                     /* (DONE): Decide on what ore to get and mine it (which means to just add it to the inventory
                                 of the livingBeing until they run out of inventory space and then they sell it instantly for
-                                money and repeat that process until the "leave work" time come) */
+                                money and repeat that process until the "leave work" time comes) */
                     if (this.inventory.length < this.inventoryMax) {
                         if (ticks % 40 == 0 /* Mines at an interval of one second */) {
                             var ore = getRandomOre();
@@ -179,8 +224,10 @@ class LivingBeing {
                                     break;
                             }
                         });
-                        // this.inventory = [];
                     }
+                    break;
+            
+                case PROFESSION.Lumberjack:
                     break;
             }
         }
