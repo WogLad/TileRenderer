@@ -159,7 +159,6 @@ class LivingBeing {
                     if (this.inventory.length < this.inventoryMax) {
                         if (ticks % 80 == 0 /* Kills monsters at an interval of two seconds */) {
                             var enemy = getRandomEnemy();
-                            // this.inventory.push(ore);
                             if (enemy.strength > this.strength && Math.random() < 0.33) {
                                 this.isAlive = false;
                                 console.log(`${this.name} was killed by an enemy(${enemy.name}).`);
