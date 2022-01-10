@@ -25,3 +25,24 @@ function getRandomEnemy() {
 
     return randEnemy;
 }
+
+function getRandomAnimal() {
+    var animals = [
+        "pig",
+        "sheep"
+    ];
+
+    var randAnimal = {};
+    randAnimal["name"] = animals[Math.round(Math.random() * (animals.length-1))];
+    randAnimal["agility"] = Math.round(Math.random() * 55);
+    switch(randAnimal.name) {
+        case "pig":
+            randAnimal["loot"] = "pork";
+            break;
+        case "sheep":
+            randAnimal["loot"] = "mutton";
+            break;
+    }
+
+    return randAnimal;
+}

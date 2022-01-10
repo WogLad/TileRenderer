@@ -195,6 +195,40 @@ class LivingBeing {
                     break;
                 
                 case PROFESSION.Hunter:
+                    // (DONE): Goes to the forest
+                    this.location = LOCATION.Forest;
+
+                    /* (DONE): Decide on what animal to hunt and hunt it (which means to just add the animal's meat to the inventory
+                                of the livingBeing until they run out of inventory space and then they sell it instantly for
+                                money and repeat that process until the "leave work" time comes) */
+                    if (this.inventory.length < this.inventoryMax) {
+                        if (ticks % 80 == 0 /* Kills animals at an interval of two seconds */) {
+                            var animal = getRandomAnimal();
+                            if (this.agility > animal.agility || (this.agility == animal.agility && Math.random() < 0.5)) { // The livingBeing killed the animal
+                                this.inventory.push(animal.loot);
+                                console.log(`${this.name} hunted an animal(${animal.name}).`);
+
+                                if (Math.random() < 0.3) {
+                                    this.agility++;
+                                }
+                            }
+                        }
+                    }
+                    else { // Sells off all the meat the livingBeing has and give them money
+                        // (DONE): Make this a forEach loop that checks what's in the inventory and increases the money based on that
+                        this.inventory.forEach(item => {
+                            switch(item) {
+                                case "pork":
+                                    this.money += 4; // The price of one "pork" is $4
+                                    this.inventory.pop(this.inventory.indexOf("pork"));
+                                    break;
+                                case "mutton":
+                                    this.money += 5; // The price of one "mutton" is $5
+                                    this.inventory.pop(this.inventory.indexOf("mutton"));
+                                    break;
+                            }
+                        });
+                    }
                     break;
             
                 case PROFESSION.Wizard:
