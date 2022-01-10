@@ -170,6 +170,10 @@ class LivingBeing {
                             else { // The livingBeing killed the enemy
                                 this.inventory.push(enemy.loot);
                                 console.log(`${this.name} killed an enemy(${enemy.name}).`);
+
+                                if (Math.random() < 0.2) {
+                                    this.strength++;
+                                }
                             }
                         }
                     }
