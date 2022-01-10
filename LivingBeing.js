@@ -161,11 +161,11 @@ class LivingBeing {
                             var enemy = getRandomEnemy();
                             if (enemy.strength > this.strength && Math.random() < 0.33) {
                                 this.isAlive = false;
-                                console.log(`${this.name} was killed by an enemy(${enemy.name}).`);
+                                console.log(`%c${this.name} was killed by an enemy(${enemy.name}).`, "color: #ff170f;");
                             }
                             else if (this.strength == enemy.strength && Math.random() < 0.5) {
                                 this.isAlive = false;
-                                console.log(`${this.name} was killed by an enemy(${enemy.name}).`);
+                                console.log(`%c${this.name} was killed by an enemy(${enemy.name}).`, "color: #ff170f;");
                             }
                             else { // The livingBeing killed the enemy
                                 this.inventory.push(enemy.loot);
