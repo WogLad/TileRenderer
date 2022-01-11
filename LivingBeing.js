@@ -232,6 +232,42 @@ class LivingBeing {
                     break;
             
                 case PROFESSION.Wizard:
+                    // (DONE): Goes to the MageTower
+                    this.location = LOCATION.MageTower;
+
+                    /* 
+                    (DONE): Decide on what monster to fight and run a combat algorithm to see who wins between the wizard and the monster.
+                    (DONE): If the wizard kills the monster, give monster loot to the wizard as a reward and make them sell all their monster
+                            loot when they run out of inventory space, and repeat that process until the "leave work" time comes.
+                    */
+                    if (this.inventory.length < this.inventoryMax) {
+                        if (ticks % 80 == 0 /* Kills monsters at an interval of two seconds */) {
+                            var enemy = getRandomEnemy();
+                            if (this.intelligence > enemy.intelligence && Math.random() > 0.33)  { // The livingBeing killed the enemy
+                                this.inventory.push(enemy.loot);
+                                console.log(`${this.name} killed an enemy(${enemy.name}).`);
+
+                                if (Math.random() < 0.2) {
+                                    this.intelligence++;
+                                }
+                            }
+                        }
+                    }
+                    else { // Sells off all the monster loot the livingBeing has and give them money
+                        // (DONE): Make this a forEach loop that checks what's in the inventory and increases the money based on that
+                        this.inventory.forEach(item => {
+                            switch(item) {
+                                case "flesh":
+                                    this.money += 5; // The price of one "flesh" is $5
+                                    this.inventory.pop(this.inventory.indexOf("flesh"));
+                                    break;
+                                case "bone":
+                                    this.money += 7; // The price of one "bone" is $7
+                                    this.inventory.pop(this.inventory.indexOf("bone"));
+                                    break;
+                            }
+                        });
+                    }
                     break;
             
                 case PROFESSION.Doctor:
