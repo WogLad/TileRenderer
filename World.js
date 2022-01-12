@@ -15,6 +15,11 @@ function getAllLivingBeings() {
     return Object.values(livingBeings).flat();
 }
 
+function getRandomLivingBeing() {
+    var lbs = Object.values(livingBeings).flat();
+    return lbs[Math.round(Math.random() * (lbs.length-1))];
+}
+
 // Spawn the first generation of humans & other species and let them live out their lives as designed
 function populateWorld(startingAmount) {
     for (var i = 0; i < startingAmount; i++) {

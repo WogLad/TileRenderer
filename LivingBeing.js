@@ -271,6 +271,20 @@ class LivingBeing {
                     break;
             
                 case PROFESSION.Doctor:
+                    // (DONE): Goes to the clinic
+                    this.location = LOCATION.Clinic;
+
+                    /* (DONE): Decide on which livingBeing to heal and heal them
+                               Get paid for the healing as well */
+                    if (ticks % 120 == 0 /* Heals at an interval of three seconds */) {
+                        var lb = getRandomLivingBeing();
+                        while (lb == this) {
+                            lb = getRandomLivingBeing();
+                        }
+
+                        this.money += 20;
+                        console.log(`${this.name} healed ${lb.name}.`);
+                    }
                     break;
             
                 case PROFESSION.Miner:
