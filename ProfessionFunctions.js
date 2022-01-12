@@ -47,3 +47,14 @@ function getRandomAnimal() {
 
     return randAnimal;
 }
+
+function getRandomFish() {
+    var fishes = [
+        "sardine",
+        "salmon",
+        "trout",
+        "shrimp"
+    ];
+
+    return fishes[Math.round(Math.random() * (fishes.length-1))];
+}

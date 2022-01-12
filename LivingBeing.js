@@ -5,6 +5,7 @@ var PROFESSION = {
     "Doctor":     3, // Uses magic to heal people
     "Miner":      4, // Mines rocks, minerals, and ores in the mountains
     "Lumberjack": 5, // Cuts trees in the forest and sells the wood and other resources from the trees for money
+    "Fisherman":  6, // Goes to the lake and fishes for fish
 }
 PROFESSION = Object.freeze(PROFESSION);
 
@@ -16,6 +17,7 @@ var LOCATION ={
     "Dungeon":   4,
     "MageTower": 5,
     "Pub":       6, // This is where everyone goes after they finish working which is at a fixed time, and this is the place where livingBeing(s) go to socialize and make "friends"
+    "Lake":      7,
 }
 LOCATION = Object.freeze(LOCATION);
 
@@ -96,7 +98,7 @@ class LivingBeing {
         }
 
         // Others
-        this.money = 0; // Increases when the livinBeing gets paid for doing they're work, which is at the "end working hours" time
+        this.money = 0; // Increases when the livingBeing gets paid for doing they're work, which is at the "end working hours" time
 
         this.inventory = [];
         this.inventoryMax = 10;
@@ -334,6 +336,45 @@ class LivingBeing {
                                 case "wood":
                                     this.money += 3; // The price of one "wood" is $3
                                     this.inventory.pop(this.inventory.indexOf("wood"));
+                                    break;
+                            }
+                        });
+                    }
+                    break;
+                
+                case PROFESSION.Fisherman:
+                    // (DONE): Goes to the lake
+                    this.location = LOCATION.Lake;
+
+                    /* (DONE): Fishes at an interval of one second (which means to just add the fish to the inventory
+                               of the livingBeing until they run out of inventory space and then they sell it instantly for
+                               money and repeat that process until the "leave work" time comes) */
+                    if (this.inventory.length < this.inventoryMax) {
+                        if (ticks % 40 == 0 && Math.random() < 0.5 /* Fishes at an interval of one second */) {
+                            var fish = getRandomFish();
+                            this.inventory.push(fish);
+                            console.log(`${this.name} fished a fish(${fish}).`);
+                        }
+                    }
+                    else { // Sells off all the wood the livingBeing has and give them money
+                        // (DONE): Make this a forEach loop that checks what's in the inventory and increases the money based on that
+                        this.inventory.forEach(item => {
+                            switch(item) {
+                                case "sardine":
+                                    this.money += 3; // The price of one "sardine" is $3
+                                    this.inventory.pop(this.inventory.indexOf("sardine"));
+                                    break;
+                                case "salmon":
+                                    this.money += 5; // The price of one "salmon" is $5
+                                    this.inventory.pop(this.inventory.indexOf("salmon"));
+                                    break;
+                                case "trout":
+                                    this.money += 4; // The price of one "trout" is $4
+                                    this.inventory.pop(this.inventory.indexOf("trout"));
+                                    break;
+                                case "shrimp":
+                                    this.money += 4; // The price of one "shrimp" is $4
+                                    this.inventory.pop(this.inventory.indexOf("shrimp"));
                                     break;
                             }
                         });
