@@ -315,6 +315,29 @@ class LivingBeing {
                     break;
             
                 case PROFESSION.Lumberjack:
+                    // (DONE): Goes to the forest
+                    this.location = LOCATION.Forest;
+
+                    /* (DONE): Cut down a tree at an interval of one second (which means to just add it to the inventory
+                               of the livingBeing until they run out of inventory space and then they sell it instantly for
+                               money and repeat that process until the "leave work" time comes) */
+                    if (this.inventory.length < this.inventoryMax) {
+                        if (ticks % 40 == 0 /* Cuts down trees at an interval of one second */) {
+                            this.inventory.push("wood");
+                            console.log(`${this.name} cut down a tree for some wood.`);
+                        }
+                    }
+                    else { // Sells off all the wood the livingBeing has and give them money
+                        // (DONE): Make this a forEach loop that checks what's in the inventory and increases the money based on that
+                        this.inventory.forEach(item => {
+                            switch(item) {
+                                case "wood":
+                                    this.money += 3; // The price of one "wood" is $3
+                                    this.inventory.pop(this.inventory.indexOf("wood"));
+                                    break;
+                            }
+                        });
+                    }
                     break;
             }
         }
