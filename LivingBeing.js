@@ -135,18 +135,16 @@ class LivingBeing {
     }
 
     performWork(t /*"t" is the ticks of the world clock*/) { // (WIP)
-        // The livingBeing doesn't do anything as the current time is before or after the working hours
-        if (t < startWorkTime) {
+        // The livingBeing goes home as the current time is before or after the working hours and they won't be at the pub at that time as well
+        if (t >= (leaveWorkTime + 1000) || t < startWorkTime) {
+            this.location = LOCATION.Home;
             return;
         }
-        // (DONE): Make the livingBeing go to the "Pub" after working for 1 hour (at tick 18000, leave the "Pub" and send them home)
-        else if (t == leaveWorkTime) {
+        // (DONE): Make the livingBeing go to the "Pub" after working, for 1 hour (at tick 18000, leave the "Pub" and send them home)
+        else if (t >= leaveWorkTime && t < (leaveWorkTime + 1000)) {
             this.location = LOCATION.Pub;
         }
-        else if (t == (leaveWorkTime+1000) /*1000 means that the livingBeing will stay in the "Pub" for 1 hour*/ ) {
-            this.location = LOCATION.Home;
-        }
-        else if (t < leaveWorkTime) {
+        else if (t >= startWorkTime && t < leaveWorkTime) {
             switch (this.profession) {
                 case PROFESSION.Warrior:
                     // (DONE): Goes to the dungeon
