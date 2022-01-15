@@ -69,18 +69,18 @@ var updateLoop = setInterval(() => {
     htmlCanvas.drawRect(Math.floor(mousePos.x/tileSize)*tileSize, Math.floor(mousePos.y/tileSize)*tileSize, tileSize, tileSize, "#ff0000");
 
     // Sin Wave on the TileMap
-    // for (var x = 0; x < canvas.width/tileSize; x++) {
-    //     for (var y = 0; y < canvas.height/tileSize; y++) {
-    //         drawTile(x, y, `rgba(255, 255, 255, ${Math.sin(x+s)})`);
-    //     }
-    // }
+    for (var x = 0; x < canvas.width/tileSize; x++) {
+        for (var y = 0; y < canvas.height/tileSize; y++) {
+            drawTile(x, y, `rgba(255, 255, 255, ${Math.sin(x+s)})`);
+        }
+    }
 
     // Sin Wave on the Canvas
-    for (var x = 0; x < canvas.width; x+=6) {
+    /*for (var x = 0; x < canvas.width; x+=6) {
         for (var y = 0; y < canvas.height; y+=6) {
             htmlCanvas.drawRect(x, y, 6, 6, `rgba(255, 255, 255, ${Math.sin(x+s)})`);
         }
-    }
+    }*/
     s += 0.1; // How much distance the sin wave travels on the x-axis every frame
 }, 10);
 
