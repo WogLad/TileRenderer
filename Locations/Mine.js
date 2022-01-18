@@ -1,5 +1,5 @@
 /*
-    (TODO): Make global variables containing information about the mountain.
+    (DONE): Make global variables containing information about the mountain.
 
     (TODO): Make a "MountainSection" class that contains a random amount of rocks within a range and places them on a two-dimensional
     grid(array), and keep track of all the miners that are in that specific "MountainSection" class instance.
@@ -13,3 +13,11 @@
 
     (TODO): Make the "mountainMap" be dynamically generated.
 */
+
+var mountainMap = [
+    [1, 1, 1, 0, 0],
+    [0, 1, 1, 0, 0],
+    [1, 1, 1, 1, 0],
+    [0, 0, 0, 1, 0],
+    [0, 0, 1, 1, 0],
+];
