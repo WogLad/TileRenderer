@@ -52,10 +52,12 @@ function bottomLeftStatsUpdater() {
     lastLoop = thisLoop;
 
     document.getElementById("fpsDisplay").innerText = (
-        `Ticks: ${ticks}\n` +
-        `FPS: ${Math.floor(fps*100)}`
+        `Ticks: ${ticks}\n`
+        // + `FPS: ${Math.floor(fps*100)}`
     );
 }
+
+var outlineThickness = 2; // Thickness of the lines that make up the box surrounding the mouse
 
 // MAIN UPDATE LOOP
 var s = 0;
@@ -65,15 +67,18 @@ var updateLoop = setInterval(() => {
 
     // ALL CODE RELATED TO DRAWING SOMETHING EVERY FRAME GOES AFTER THIS LINE
     
-    // Draws a red square to the TileMap that follows the mouse
-    htmlCanvas.drawRect(Math.floor(mousePos.x/tileSize)*tileSize, Math.floor(mousePos.y/tileSize)*tileSize, tileSize, tileSize, "#ff0000");
+    // Draws a red box around the mouse onto the TileMap that follows the mouse
+    htmlCanvas.drawRect(Math.floor(mousePos.x/tileSize)*tileSize, Math.floor(mousePos.y/tileSize)*tileSize, outlineThickness, tileSize, "#ff0000");
+    htmlCanvas.drawRect(Math.floor(mousePos.x/tileSize)*tileSize, Math.floor(mousePos.y/tileSize)*tileSize, tileSize, outlineThickness, "#ff0000");
+    htmlCanvas.drawRect((Math.floor(mousePos.x/tileSize)*tileSize) + tileSize, Math.floor(mousePos.y/tileSize)*tileSize, outlineThickness, tileSize + outlineThickness, "#ff0000");
+    htmlCanvas.drawRect(Math.floor(mousePos.x/tileSize)*tileSize, (Math.floor(mousePos.y/tileSize)*tileSize) + tileSize, tileSize + outlineThickness, outlineThickness, "#ff0000");
 
     // Sin Wave on the TileMap
-    for (var x = 0; x < canvas.width/tileSize; x++) {
+    /*for (var x = 0; x < canvas.width/tileSize; x++) {
         for (var y = 0; y < canvas.height/tileSize; y++) {
             drawTile(x, y, `rgba(255, 255, 255, ${Math.sin(x+s)})`);
         }
-    }
+    }*/
 
     // Sin Wave on the Canvas
     /*for (var x = 0; x < canvas.width; x+=6) {
@@ -81,7 +86,7 @@ var updateLoop = setInterval(() => {
             htmlCanvas.drawRect(x, y, 6, 6, `rgba(255, 255, 255, ${Math.sin(x+s)})`);
         }
     }*/
-    s += 0.1; // How much distance the sin wave travels on the x-axis every frame
+    //s += 0.1; // How much distance the sin wave travels on the x-axis every frame
 }, 10);
 
 setInterval(() => {bottomLeftStatsUpdater()}, 1000); // Updates the stats in the bottom left corner of the page once every second
