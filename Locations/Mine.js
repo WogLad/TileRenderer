@@ -43,4 +43,4 @@ function generateMountain() {
     }
 }
 
-getGeneratedMountain();
+generateMountain();
